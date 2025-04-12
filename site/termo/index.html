@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Termo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    input {
+      font-size: 20px;
+      text-transform: uppercase;
+      width: 120px;
+      text-align: center;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    .letra {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      margin: 2px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .correto { background-color: green; }
+    .existe { background-color: orange; }
+    .errado { background-color: gray; }
+  </style>
+</head>
+<body>
+  <h1>Termo</h1>
+  <p>Tente adivinhar a palavra de 5 letras!</p>
+  <input type="text" id="tentativa" maxlength="5">
+  <button onclick="verificar()">Verificar</button>
+
+  <div class="resultado" id="resultado"></div>
+
+  <script>
+    const palavraSecreta = "LIVRO"; 
+    
+    function verificar() {
+      const entrada = document.getElementById("tentativa").value.toUpperCase();
+      const resultado = document.getElementById("resultado");
+      resultado.innerHTML = "";
+
+      if (entrada.length !== 5) {
+        resultado.textContent = "Digite exatamente 5 letras!";
+        return;
+      }
+
+      for (let i = 0; i < 5; i++) {
+        const letra = entrada[i];
+        const span = document.createElement("span");
+        span.classList.add("letra");
+
+        if (letra === palavraSecreta[i]) {
+          span.classList.add("correto");
+        } else if (palavraSecreta.includes(letra)) {
+          span.classList.add("existe");
+        } else {
+          span.classList.add("errado");
+        }
+
+        span.textContent = letra;
+        resultado.appendChild(span);
+      }
+
+      if (entrada === palavraSecreta) {
+        setTimeout(() => alert("Você acertou!"), 100);
+      }
+    }
+  </script>
+</body>
+</html>
